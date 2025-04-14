@@ -40,6 +40,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('laporan/pendapatan', [LaporanController::class, 'laporanPendapatan'])->name('laporan.pendapatan');
     Route::get('laporan/tagihan', [LaporanController::class, 'laporanTagihan'])->name('laporan.tagihan');
     Route::get('laporan/pasien', [LaporanController::class, 'laporanPasien'])->name('laporan.pasien');
+    Route::get('/laporan/pendapatan/pdf', [LaporanController::class, 'exportPendapatanPdf'])->name('laporan.pendapatan.pdf');
+
 });
 
 // Route untuk Dashboard

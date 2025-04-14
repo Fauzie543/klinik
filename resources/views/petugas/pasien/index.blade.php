@@ -31,8 +31,8 @@
             <td class="border p-2">{{ $pasien->tanggal_lahir }}</td>
             <td class="border p-2">{{ $pasien->alamat }}</td>
             <td class="border p-2">
-                <a href="{{ route('pasien.edit', $pasien) }}" class="text-blue-500">Edit</a>
-                <form action="{{ route('pasien.destroy', $pasien) }}" method="POST" class="inline"
+                <a href="{{ route('pendaftaran.pasien.edit', $pasien) }}" class="text-blue-500">Edit</a>
+                <form action="{{ route('pendaftaran.pasien.destroy', $pasien) }}" method="POST" class="inline"
                     onsubmit="return confirm('Yakin ingin menghapus?')">
                     @csrf @method('DELETE')
                     <button class="text-red-500 ml-2">Hapus</button>

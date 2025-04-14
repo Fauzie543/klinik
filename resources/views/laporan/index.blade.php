@@ -11,13 +11,20 @@
         <button id="tab-tagihan"
             class="tab-button py-2 px-4 bg-blue-500 text-white hover:bg-blue-600 focus:outline-none">Tagihan</button>
         <button id="tab-pasien"
-            class="tab-button py-2 px-4 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 focus:outline-none">Pasien</button>
+            class="tab-button py-2 px-4 bg-blue-500 text-white hover:bg-blue-600 focus:outline-none">Pasien</button>
+        <button id="tab-grafik"
+            class="tab-button py-2 px-4 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 focus:outline-none">Grafik</button>
     </div>
+
 
     <!-- Tab Content -->
     <div id="content-pendapatan" class="tab-content">
         <h2 class="text-xl font-semibold mb-4">Laporan Pendapatan</h2>
         <p>Total Pendapatan: Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</p>
+        <a href="{{ route('laporan.pendapatan.pdf') }}" target="_blank"
+            class="inline-block mb-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
+            Export PDF
+        </a>
     </div>
 
     <div id="content-tagihan" class="tab-content hidden">
@@ -76,6 +83,22 @@
         @endif
     </div>
 
+    <div id="content-grafik" class="tab-content hidden">
+        <h2 class="text-xl font-semibold mb-4">Laporan Grafik Klinik</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <h3 class="font-semibold mb-2">Kunjungan Pasien per Bulan</h3>
+                <canvas id="kunjunganChart"></canvas>
+            </div>
+
+            <div>
+                <h3 class="font-semibold mb-2">Obat Paling Sering Diresepkan</h3>
+                <canvas id="obatChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 @endsection
@@ -108,4 +131,63 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const tabs = document.querySelectorAll(".tab-button");
+    const contents = document.querySelectorAll(".tab-content");
+
+    tabs.forEach((tab) => {
+        tab.addEventListener("click", function() {
+            contents.forEach((content) => content.classList.add("hidden"));
+            const target = tab.id.replace("tab-", "content-");
+            document.getElementById(target).classList.remove("hidden");
+
+            tabs.forEach((btn) => {
+                btn.classList.remove("bg-blue-600");
+                btn.classList.add("bg-blue-500");
+            });
+            tab.classList.remove("bg-blue-500");
+            tab.classList.add("bg-blue-600");
+        });
+    });
+
+    // Chart Data from Controller
+    const kunjunganData = @json($kunjunganData);
+    const obatData = @json($obatData);
+
+
+
+
+    new Chart(document.getElementById("kunjunganChart"), {
+        type: "bar",
+        data: {
+            labels: kunjunganData.labels,
+            datasets: [{
+                label: 'Jumlah Kunjungan',
+                data: kunjunganData.data,
+                backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                borderColor: 'rgba(59, 130, 246, 1)',
+                borderWidth: 1
+            }]
+        }
+    });
+
+
+    new Chart(document.getElementById("obatChart"), {
+        type: "pie",
+        data: {
+            labels: obatData.labels,
+            datasets: [{
+                label: 'Jumlah',
+                data: obatData.data,
+                backgroundColor: ['#4ADE80', '#FCD34D', '#818CF8', '#FB7185'],
+            }]
+        }
+    });
+});
+</script>
+
+
 @endpush

@@ -3,7 +3,7 @@
 @section('content')
 <h2 class="text-xl font-bold mb-4">Edit Data Pasien</h2>
 
-<form action="{{ route('pasien.update', $pasien) }}" method="POST" class="space-y-4 max-w-lg">
+<form action="{{ route('pendaftaran.pasien.update', $pasien) }}" method="POST" class="space-y-4 max-w-lg">
     @csrf
     @method('PUT')
 
@@ -41,7 +41,7 @@
 
     <div>
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Update</button>
-        <a href="{{ route('pasien.index') }}" class="ml-2 text-gray-600">Kembali</a>
+        <a href="{{ route('pendaftaran.pasien.index') }}" class="ml-2 text-gray-600">Kembali</a>
     </div>
 </form>
 @endsection

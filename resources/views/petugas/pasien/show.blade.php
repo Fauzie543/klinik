@@ -32,12 +32,13 @@
     </div>
 
     <div class="mt-6 flex justify-between">
-        <a href="{{ route('pasien.index') }}" class="text-gray-700 hover:text-blue-600">&larr; Kembali ke daftar</a>
+        <a href="{{ route('pendaftaran.pasien.index') }}" class="text-gray-700 hover:text-blue-600">&larr; Kembali ke
+            daftar</a>
 
         <div class="space-x-2">
-            <a href="{{ route('pasien.edit', $pasien) }}"
+            <a href="{{ route('pendaftaran.pasien.edit', $pasien) }}"
                 class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Edit</a>
-            <form action="{{ route('pasien.destroy', $pasien) }}" method="POST" class="inline">
+            <form action="{{ route('pendaftaran.pasien.destroy', $pasien) }}" method="POST" class="inline">
                 @csrf
                 @method('DELETE')
                 <button type="submit" onclick="return confirm('Yakin ingin menghapus data ini?')"
